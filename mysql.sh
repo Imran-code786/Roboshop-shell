@@ -2,6 +2,12 @@
 echo -e "\e[33m Disable Mysql Default version\e[0m"
 yum module disable mysql -y 
 
+
+
+echo -e "\e[33m copy mysql repo file\e[0m"
+cp /home/centos/Roboshop-shell/mysql.repo  /etc/yum.repos.d/mysql.repo
+
+
 echo -e "\e[33mInstal Mysql community server\e[0m"
 yum install mysql-community-server -y
 
