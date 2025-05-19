@@ -11,6 +11,5 @@ echo -e "\e[33mInstalling mongodb Service\e[0m"
 systemctl enable nginx &>>/tmp/roboshop.log
 systemctl restart nginx &>>/tmp/roboshop.log
 
-ali
 
 
