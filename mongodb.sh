@@ -2,7 +2,7 @@
 
 
 echo -e "\e[33m copy mongodb file\e[0m"
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo   &>>/tmp/roboshop.log
+cp mongodb.repo /etc/yum.repos.d/mongod.repo   &>>/tmp/roboshop.log
 
 
 echo -e "\e[33m Installing mongodb\e[0m"
