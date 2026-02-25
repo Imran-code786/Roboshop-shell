@@ -11,7 +11,7 @@ unzip /tmp/frontend.zip
 
 
 
-vim /etc/nginx/default.d/roboshop.conf
+#vim /etc/nginx/default.d/roboshop.conf
 
 
 systemctl enable nginx
