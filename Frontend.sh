@@ -1,4 +1,4 @@
-echo -e "\e[33m  Istalling Nginx service\e[0m"
+echo -e "\e[33m Installing Nginx service\e[0m"
 yum install nginx -y  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Removing old app content\e[0m"
