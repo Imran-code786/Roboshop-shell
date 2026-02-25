@@ -13,6 +13,7 @@ sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
 echo -e "\e[33mstart mongodb service\e[0m"
 systemctl enable mongodb
+systemctl start mongodb
 systemctl restart mongodb
 
 
