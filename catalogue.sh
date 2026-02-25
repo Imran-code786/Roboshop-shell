@@ -39,6 +39,6 @@ echo -e "\e[33m Install mongodb client \e[0m"
 dnf install mongodb-org-shell -y &>>/tmp/roboshop.log
 
 echo -e "\e[33m load schema \e[0m"
-mongo --host mongodb-dev.imrankhandevops72.online </app/schema/catalogue.js &>>/tmp/roboshop.log
+mongo --host 172.31.73.151 </app/schema/catalogue.js &>>/tmp/roboshop.log
 
 
