@@ -25,7 +25,7 @@ npm install &>>/tmp/roboshop.log
 
 echo -e "\e[33m setup systemd service \e[0m"
 #vim /etc/systemd/system/catalogue.service
-cp catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
+cp catalogue.service /etc/systemd/system/catalogue.service  &>>/tmp/roboshop.log
 
 echo -e "\e[33m start catalogue service \e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
