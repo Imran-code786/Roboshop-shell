@@ -25,7 +25,7 @@ npm install &>>/tmp/roboshop.log
 
 echo -e "\e[33m setup systemd service \e[0m"
 #vim /etc/systemd/system/catalogue.service
-cp catalogue.service /etc/systemd/system/catalogue.service  &>>/tmp/roboshop.log
+cp /root/Roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service  &>>/tmp/roboshop.log
 
 echo -e "\e[33m start catalogue service \e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
@@ -33,7 +33,7 @@ systemctl enable catalogue &>>/tmp/roboshop.log
 systemctl start catalogue &>>/tmp/roboshop.log
 
 echo -e "\e[33m Mongodb reposfile \e[0m"
-cp mongodb.repo /etc/yum.repos.d/mongod.repo &>>/tmp/roboshop.log
+cp /root/Roboshop-shell/mongodb.repo /etc/yum.repos.d/mongod.repo &>>/tmp/roboshop.log
 
 echo -e "\e[33m Install mongodb client \e[0m"
 dnf install mongodb-org-shell -y &>>/tmp/roboshop.log
