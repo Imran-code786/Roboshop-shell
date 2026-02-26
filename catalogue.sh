@@ -42,3 +42,4 @@ echo -e "\e[33m load schema \e[0m"
 mongo --host 172.31.73.151 </app/schema/catalogue.js &>>/tmp/roboshop.log
 
 
+
