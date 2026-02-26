@@ -18,4 +18,4 @@ sed -i 's/^bind .*/bind 0.0.0.0/' /etc/redis.conf
 
 echo -e "\e[33m Start redis server \e[0m"
 systemctl enable redis
-systemctl start redis
+systemctl restart redis
