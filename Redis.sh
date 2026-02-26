@@ -1,7 +1,8 @@
 
 echo -e "\e[33m Install Redis Server \e[0m"
-yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+#yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 
+dnf module disable redis -y
 echo -e "\e[33m Enable Redis server \e[0m"
 yum module enable redis:6 -y
 
