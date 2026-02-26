@@ -20,6 +20,7 @@ echo -e "\e[33m Extract application content\e[0m"
 unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
 cd /app &>>/tmp/roboshop.log
 
+chown -R roboshop:roboshop /app &>>/tmp/roboshop.log
 echo -e "\e[33m Install  Nodejs Dependencies\e[0m"
 npm install &>>/tmp/roboshop.log
 
@@ -36,7 +37,7 @@ echo -e "\e[33m Mongodb reposfile \e[0m"
 cp /root/Roboshop-shell/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>/tmp/roboshop.log
 
 echo -e "\e[33m Install mongodb client \e[0m"
-dnf install mongodb-org-shell -y &>>/tmp/roboshop.log
+yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 
 echo -e "\e[33m load schema \e[0m"
 mongo --host 172.31.73.151 </app/schema/catalogue.js &>>/tmp/roboshop.log
