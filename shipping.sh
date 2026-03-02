@@ -28,7 +28,7 @@ mvn clean package  &>>${log_file}
 mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
 
 
-echo -e "\e[33 setuo systemctl m ${nocolor}"
+echo -e "${color} setup systemctl  ${nocolor}"
 cp /root/Roboshop-shell/${component}.service /etc/systemd/system/${component}.service  &>>${log_file}
 
 
