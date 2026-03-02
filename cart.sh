@@ -1,33 +1,36 @@
+source common.sh
+component=cart
 
-echo -e "\e[33m configuring Nodejs Repos\e[0m"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash  &>>/tmp/roboshop.log
 
-echo -e "\e[33m Install Nodejs\e[0m"
-dnf install nodejs -y   &>>/tmp/roboshop.log
+echo -e "${color} configuring Nodejs Repos${nocolor}"
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash  &>>${log_file}
 
-echo -e "\e[33m add application user \e[0m"
-useradd roboshop  &>>/tmp/roboshop.log
+echo -e "${color} Install Nodejs${nocolor}"
+dnf install nodejs -y   &>>${log_file}
 
-echo -e "\e[33m create application directory  \e[0m"
-rm -rf /app  &>>/tmp/roboshop.log
-mkdir /app   &>>/tmp/roboshop.log
+echo -e "${color} add application user ${nocolor}"
+useradd roboshop  &>>${log_file}
 
-echo -e "\e[33m   download application content \e[0m"
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip  &>>/tmp/roboshop.log
-cd /app &>>/tmp/roboshop.log
+echo -e "${color} create application directory  ${nocolor}"
+rm -rf ${app_path}  &>>${log_file}
+mkdir ${app_path}   &>>${log_file}
 
-echo -e "\e[33m Extract application content \e[0m"
-unzip /tmp/cart.zip  &>>/tmp/roboshop.log
-cd /app  &>>/tmp/roboshop.log
+echo -e "${color}   download application content ${nocolor}"
+curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>${log_file}
+cd ${app_path} &>>${log_file}
 
-echo -e "\e[33m install nidejs Dependences \e[0m"
-npm install  &>>/tmp/roboshop.log
+echo -e "${color} Extract application content ${nocolor}"
+unzip /tmp/${component}.zip  &>>${log_file}
+cd ${app_path}  &>>${log_file}
 
-echo -e "\e[33m setup systemd service\e[0m"
-cp /root/Roboshop-shell/cart.service /etc/systemd/system/cart.service    &>>/tmp/roboshop.log
+echo -e "${color} install nidejs Dependences ${nocolor}"
+npm install  &>>${log_file}
 
-echo -e "\e[33m start cart services\e[0m"
-systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl enable cart   &>>/tmp/roboshop.log
-systemctl start cart    &>>/tmp/roboshop.log
+echo -e "${color} setup systemd service${nocolor}"
+cp /root/Roboshop-shell/${component}.service /etc/systemd/system/${component}.service    &>>${log_file}
+
+echo -e "${color} start ${component} services${nocolor}"
+systemctl daemon-reload &>>${log_file}
+systemctl enable ${component}   &>>${log_file}
+systemctl start ${component}    &>>${log_file}
 
