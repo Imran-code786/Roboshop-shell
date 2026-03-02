@@ -76,3 +76,15 @@ mysql_schema_setup(){
    echo -e "${color} cheksk${nocolor}"
    mysql -h 172.31.8.118 -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
 }
+
+python(){
+
+    echo -e "${color}mInstall Python${nocolor}"
+    dnf install python36 gcc python3-devel -y    &>>${log_file}
+
+    echo -e "${color}mInstall application Dependencies${nocolor}"
+    cd ${app_path}    &>>${log_file}
+    pip3.6 install -r requirements.txt    &>>${log_file}
+
+
+}
