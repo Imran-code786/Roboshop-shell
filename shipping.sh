@@ -3,10 +3,10 @@ component=shipping
 
 
 echo -e "${color} Install maven ${nocolor}"
-dnf install maven -y
+dnf install maven -y &>>${log_file}
 
 echo -e "${color}  add application user ${nocolor}"
-useradd roboshop
+useradd roboshop &>>${log_file}
 
 echo -e "${color} create application directory  ${nocolor}"
 rm -rf ${app_path} &>>${log_file}
