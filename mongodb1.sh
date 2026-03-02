@@ -1,6 +1,6 @@
 #echo -e "${color} Removing old app content${nocolor}"
 source common.sh
-component=mongodb
+component=mongodb1
 
 
 echo -e "${color} copy mongodb file${nocolor}"
