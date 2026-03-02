@@ -1,21 +1,23 @@
-#echo -e "\e[33m Removing old app content\e[0m"
+#echo -e "${color} Removing old app content${nocolor}"
+source common.sh
+component=mongodb
 
 
-echo -e "\e[33m copy mongodb file\e[0m"
-cp /root/Roboshop-shell/mongodb.repo /etc/yum.repos.d/mongod.repo   &>>/tmp/roboshop.log
+echo -e "${color} copy mongodb file${nocolor}"
+cp /root/Roboshop-shell/${component}.repo /etc/yum.repos.d/mongod.repo   &>>${log_file}
 
 
-echo -e "\e[33m Installing mongodb\e[0m"
-yum install mongodb-org -y  &>>/tmp/roboshop.log
+echo -e "${color} Installing mongodb${nocolor}"
+yum install ${component}-org -y  &>>${log_file}
 
-echo -e "\e[33m mongodb listen address \e[0m"
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf  &>>/tmp/roboshop.log
+echo -e "${color} mongodb listen address ${nocolor}"
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf  &>>${log_file}
 
-echo -e "\e[33mstart mongodb service\e[0m"
-systemctl daemon-reload  &>>/tmp/roboshop.log
-systemctl enable mongod  &>>/tmp/roboshop.log
-systemctl start mongod  &>>/tmp/roboshop.log
-systemctl restart mongod  &>>/tmp/roboshop.log
+echo -e "${color}start mongodb service${nocolor}"
+systemctl daemon-reload  &>>${log_file}
+systemctl enable mongod  &>>${log_file}
+systemctl start mongod  &>>${log_file}
+systemctl restart mongod  &>>${log_file}
 
 
 

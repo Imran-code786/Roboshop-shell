@@ -1,22 +1,26 @@
+source common.sh
+component=redis
 
-echo -e "\e[33m Install Redis Server \e[0m"
-#yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y  &>>/tmp/roboshop.log
 
-dnf module disable redis -y  &>>/tmp/roboshop.log
-echo -e "\e[33m Enable Redis server \e[0m"
-yum module enable redis:6 -y  &>>/tmp/roboshop.log
 
-echo -e "\e[33m Install Redis \e[0m"
-yum install redis  &>>/tmp/roboshop.log
+echo -e "${color} Install Redis Server ${nocolor}"
+#yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y  &>>${log_file}
 
-mkdir -p /etc/redis  &>>/tmp/roboshop.log
-cp /etc/redis.conf /etc/redis/redis.conf  &>>/tmp/roboshop.log
+dnf module disable ${component} -y  &>>${log_file}
+echo -e "${color} Enable Redis server ${nocolor}"
+yum module enable ${component}:6 -y  &>>${log_file}
 
-echo -e "\e[33mUpdate Redis listen address \e[0m"
-#sed -i 's/127.0.0.1/0.0.0.0'  /etc/redis.conf  /etc/redis/redis.conf
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf /etc/redis/redis.conf  &>>/tmp/roboshop.log
-sed -i 's/^bind .*/bind 0.0.0.0/' /etc/redis.conf  &>>/tmp/roboshop.log
+echo -e "${color} Install Redis ${nocolor}"
+yum install ${component}  &>>${log_file}
 
-echo -e "\e[33m Start redis server \e[0m"
-systemctl enable redis  &>>/tmp/roboshop.log
-systemctl restart redis  &>>/tmp/roboshop.log
+mkdir -p /etc/${component}  &>>${log_file}
+cp /etc/${component}.conf /etc/${component}/${component}.conf  &>>${log_file}
+
+echo -e "${color}Update Redis listen address ${nocolor}"
+#sed -i 's/127.0.0.1/0.0.0.0'  /etc/${component}.conf  /etc/${component}/${component}.conf
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/${component}.conf /etc/${component}/${component}.conf  &>>${log_file}
+sed -i 's/^bind .*/bind 0.0.0.0/' /etc/${component}.conf  &>>${log_file}
+
+echo -e "${color} Start redis server ${nocolor}"
+systemctl enable ${component}  &>>${log_file}
+systemctl restart ${component}  &>>${log_file}

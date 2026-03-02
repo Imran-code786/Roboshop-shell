@@ -1,46 +1,49 @@
+source common.sh
+component=shipping
 
-echo -e "\e[33m Install maven \e[0m"
+
+echo -e "${color} Install maven ${nocolor}"
 dnf install maven -y
 
-echo -e "\e[33m  add application user \e[0m"
+echo -e "${color}  add application user ${nocolor}"
 useradd roboshop
 
-echo -e "\e[33m create application directory  \e[0m"
-rm -rf /app &>>/tmp/roboshop.log
-mkdir /app &>>/tmp/roboshop.log
+echo -e "${color} create application directory  ${nocolor}"
+rm -rf ${app_path} &>>${log_file}
+mkdir ${app_path} &>>${log_file}
 
 
-echo -e "\e[33m Download application content \e[0m"
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping.zip &>>/tmp/roboshop.log
-cd /app  &>>/tmp/roboshop.log
+echo -e "${color} Download application content ${nocolor}"
+curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
+cd ${app_path}  &>>${log_file}
 
-echo -e "\e[33m Extract application content \e[0m"
-unzip /tmp/shipping.zip  &>>/tmp/roboshop.log
+echo -e "${color} Extract application content ${nocolor}"
+unzip /tmp/${component}.zip  &>>${log_file}
 
-cd /app  &>>/tmp/roboshop.log
-
-
-echo -e "\e[33m depemdency \e[0m"
-mvn clean package  &>>/tmp/roboshop.log
-mv target/shipping-1.0.jar shipping.jar &>>/tmp/roboshop.log
+cd ${app_path}  &>>${log_file}
 
 
-echo -e "\e[33 setuo systemctl m \e[0m"
-cp /root/Roboshop-shell/shipping.service /etc/systemd/system/shipping.service  &>>/tmp/roboshop.log
+echo -e "${color} depemdency ${nocolor}"
+mvn clean package  &>>${log_file}
+mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
 
 
-echo -e "\e[33m  load schema \e[0m"
-systemctl daemon-reload  &>>/tmp/roboshop.log
-
-systemctl enable shipping  &>>/tmp/roboshop.log
-systemctl start shipping  &>>/tmp/roboshop.log
+echo -e "\e[33 setuo systemctl m ${nocolor}"
+cp /root/Roboshop-shell/${component}.service /etc/systemd/system/${component}.service  &>>${log_file}
 
 
-echo -e "\e[33m star mysql \e[0m"
-dnf install mysql -y  &>>/tmp/roboshop.log
+echo -e "${color}  load schema ${nocolor}"
+systemctl daemon-reload  &>>${log_file}
 
-echo -e "\e[33m cheksk\e[0m"
-mysql -h 172.31.8.118 -uroot -pRoboShop@1 < /app/schema/shipping.sql  &>>/tmp/roboshop.log
+systemctl enable ${component}  &>>${log_file}
+systemctl start ${component}  &>>${log_file}
 
-echo -e "\e[33m  restart \e[0m"
-systemctl restart shipping  &>>/tmp/roboshop.log
+
+echo -e "${color} star mysql ${nocolor}"
+dnf install mysql -y  &>>${log_file}
+
+echo -e "${color} cheksk${nocolor}"
+mysql -h 172.31.8.118 -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
+
+echo -e "${color}  restart ${nocolor}"
+systemctl restart ${component}  &>>${log_file}

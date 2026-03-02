@@ -1,33 +1,36 @@
-
-echo -e "\e[33mInstall Python\e[0m"
-dnf install python36 gcc python3-devel -y   &>>/tmp/roboshop.log
-
-echo -e "\e[33madd application user\e[0m"
-useradd roboshop   &>>/tmp/roboshop.log
-
-echo -e "\e[33mcreate application directorye[0m"
-rm -rf /app   &>>/tmp/roboshop.log
-mkdir /app    &>>/tmp/roboshop.log
+source common.sh
+component=payment
 
 
-echo -e "\e[33m Download application content\e[0m"
-curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment.zip  &>>/tmp/roboshop.log
-cd /app  &>>/tmp/roboshop.log
+echo -e "${color}mInstall Python${nocolor}"
+dnf install python36 gcc python3-devel -y    &>>${log_file}
 
-echo -e "\e[33mExtract application content\e[0m"
-unzip /tmp/payment.zip  &>>/tmp/roboshop.log
+echo -e "${color}madd application user${nocolor}"
+useradd roboshop    &>>${log_file}
 
-echo -e "\e[33mInstall application Dependencies\e[0m"
-cd /app   &>>/tmp/roboshop.log
-pip3.6 install -r requirements.txt   &>>/tmp/roboshop.log
-
-echo -e "\e[33msetup systemd\e[0m"
-cp /root/Roboshop-shell/payment.service /etc/systemd/system/payment.service   &>>/tmp/roboshop.log
+echo -e "${color}mcreate application directorye[0m"
+rm -rf ${app_path}    &>>${log_file}
+mkdir ${app_path}     &>>${log_file}
 
 
-echo -e "\e[33m start payment service\e[0m"
-systemctl daemon-reload   &>>/tmp/roboshop.log
+echo -e "${color}m Download application content${nocolor}"
+curl -L -o /tmp/${${component}}.zip https://roboshop-artifacts.s3.amazonaws.com/${${component}}.zip   &>>${log_file}
+cd ${app_path}   &>>${log_file}
+
+echo -e "${color}mExtract application content${nocolor}"
+unzip /tmp/${${component}}.zip   &>>${log_file}
+
+echo -e "${color}mInstall application Dependencies${nocolor}"
+cd ${app_path}    &>>${log_file}
+pip3.6 install -r requirements.txt    &>>${log_file}
+
+echo -e "${color}msetup systemd${nocolor}"
+cp /root/Roboshop-shell/${${component}}.service /etc/systemd/system/${${component}}.service    &>>${log_file}
 
 
-systemctl enable payment   &>>/tmp/roboshop.log
-systemctl start payment    &>>/tmp/roboshop.log
+echo -e "${color}m start payment service${nocolor}"
+systemctl daemon-reload    &>>${log_file}
+
+
+systemctl enable ${${component}}    &>>${log_file}
+systemctl start ${${component}}     &>>${log_file}
