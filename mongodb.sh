@@ -19,6 +19,8 @@ systemctl enable mongod  &>>${log_file}
 systemctl start mongod  &>>${log_file}
 systemctl restart mongod  &>>${log_file}
 
+###
+
 
 
 
