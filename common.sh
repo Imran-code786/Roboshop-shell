@@ -56,3 +56,23 @@ mongod_schema_setup(){
     echo -e "${color} load schema ${nocolor}"
     mongo --host 172.31.73.151 <${app_path}/schema/${component}.js &>>${log_file}
 }
+
+maven(){
+
+    echo -e "${color} Install maven ${nocolor}"
+    dnf install maven -y &>>${log_file}
+
+    echo -e "${color} depemdency ${nocolor}"
+    mvn clean package  &>>${log_file}
+    mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+}
+
+
+mysql_schema_setup(){
+
+   echo -e "${color} star mysql ${nocolor}"
+   dnf install mysql -y  &>>${log_file}
+
+   echo -e "${color} cheksk${nocolor}"
+   mysql -h 172.31.8.118 -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
+}
