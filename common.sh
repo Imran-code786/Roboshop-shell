@@ -11,8 +11,12 @@ nodejs(){
    echo -e "${color} Install Nodejs${nocolor}"
    yum install nodejs -y &>>${log_file}
 
+   app_presetup
+
    echo -e "${color} Install  Nodejs Dependencies${nocolor}"
    npm install &>>${log_file}
+
+   systemd_setup
 
 }
 
@@ -65,6 +69,8 @@ maven(){
     echo -e "${color} depemdency ${nocolor}"
     mvn clean package  &>>${log_file}
     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+    mysql_schema_setup
+    systemd_setup
 }
 
 
@@ -82,9 +88,12 @@ python(){
     echo -e "${color}mInstall Python${nocolor}"
     dnf install python36 gcc python3-devel -y    &>>${log_file}
 
+    app_presetup
+
     echo -e "${color}mInstall application Dependencies${nocolor}"
     cd ${app_path}    &>>${log_file}
     pip3.6 install -r requirements.txt    &>>${log_file}
 
+    systemd_setup
 
 }
