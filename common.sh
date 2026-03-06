@@ -23,7 +23,10 @@ nodejs(){
 app_presetup(){
 
     echo -e "${color} Add application user ${nocolor}"
-    useradd roboshop &>>${log_file}
+    id roboshop &>>$log_file
+    if [ $? -eq 1 ]; then
+      useradd roboshop &>>${log_file}
+    fi
     #echo $?
     if [ $? -eq 0 ]; then
        echo SUCCESS
