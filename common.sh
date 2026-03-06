@@ -81,7 +81,7 @@ app_presetup(){
 systemd_setup(){
      echo -e "${color} setup systemd service ${nocolor}"
      #vim /etc/systemd/system/${component}.service
-     cp /root/Roboshop-shell/${component}.service /etc/systemd/system/${component}.service  &>>${log_file}
+     cp /root/Roboshop-shell/${component}.service /etc/systemd/system/$component.service  &>>${log_file}
      sed -i -e "s/roboshop_app_password/$roboshop_app_password/" /etc/systemd/system/$component.service
 
      echo -e "${color} start ${component} service ${nocolor}"
