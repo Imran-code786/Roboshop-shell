@@ -24,21 +24,41 @@ app_presetup(){
 
     echo -e "${color} Add application user ${nocolor}"
     useradd roboshop &>>${log_file}
-    echo $?
+    #echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
 
     echo -e "${color} create application directory ${nocolor}"
     rm -rf ${app_path} &>>${log_file}
     mkdir ${app_path} &>>${log_file}
-    echo $?
+    #echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
 
     echo -e "${color} Download application content${nocolor}"
     curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
-     echo $?
+     #echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
     cd ${app_path} &>>${log_file}
 
     echo -e "${color} Extract application content${nocolor}"
     unzip /tmp/${component}.zip &>>${log_file}
-    echo $?
+    #echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
     cd ${app_path} &>>${log_file}
 }
 
@@ -51,7 +71,12 @@ systemd_setup(){
      systemctl daemon-reload &>>${log_file}
      systemctl enable ${component} &>>${log_file}
      systemctl start ${component} &>>${log_file}
-     echo $?
+     ##echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
 }
 
 mongod_schema_setup(){
@@ -92,14 +117,24 @@ python(){
 
     echo -e "${color}mInstall Python${nocolor}"
     dnf install python36 gcc python3-devel -y    &>>${log_file}
-    echo $?
+    ##echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
 
     app_presetup
 
     echo -e "${color}mInstall application Dependencies${nocolor}"
     cd ${app_path}    &>>${log_file}
     pip3.6 install -r requirements.txt    &>>${log_file}
-    echo $?
+    #echo $?
+    if [ $? -eq 0 ]; then
+       echo SUCCESS
+    else
+      echo FAILURE
+    fi
 
     systemd_setup
 
