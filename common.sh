@@ -20,14 +20,17 @@ stat_check() {
 nodejs(){
    echo -e "${color} Configuraing nodejs repos ${nocolor}"
    curl -sL http://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+   stat_check $?
 
    echo -e "${color} Install Nodejs${nocolor}"
    yum install nodejs -y &>>${log_file}
+   stat_check $?
 
    app_presetup
 
    echo -e "${color} Install  Nodejs Dependencies${nocolor}"
    npm install &>>${log_file}
+   stat_check $?
 
    systemd_setup
 
@@ -87,7 +90,9 @@ systemd_setup(){
      echo -e "${color} setup systemd service ${nocolor}"
      #vim /etc/systemd/system/${component}.service
      cp /root/Roboshop-shell/${component}.service /etc/systemd/system/$component.service  &>>${log_file}
+     stat_check $?
      sed -i -e "s/roboshop_app_password/$roboshop_app_password/" /etc/systemd/system/$component.service
+     stat_check $?
 
      echo -e "${color} start ${component} service ${nocolor}"
      systemctl daemon-reload &>>${log_file}
@@ -107,22 +112,27 @@ mongod_schema_setup(){
 
     echo -e "${color} Mongodb reposfile ${nocolor}"
     cp /root/Roboshop-shell/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
+    stat_check $?
 
     echo -e "${color} Install mongodb client ${nocolor}"
     yum install mongodb-org-shell -y &>>${log_file}
+    stat_check $?
 
     echo -e "${color} load schema ${nocolor}"
     mongo --host 172.31.73.151 <${app_path}/schema/${component}.js &>>${log_file}
+    stat_check $?
 }
 
 maven(){
 
     echo -e "${color} Install maven ${nocolor}"
     dnf install maven -y &>>${log_file}
+    stat_check $?
 
     echo -e "${color} depemdency ${nocolor}"
     mvn clean package  &>>${log_file}
     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+    stat_check $?
     mysql_schema_setup
     systemd_setup
 }
@@ -132,9 +142,11 @@ mysql_schema_setup(){
 
    echo -e "${color} star mysql ${nocolor}"
    dnf install mysql -y  &>>${log_file}
+   stat_check $?
 
    echo -e "${color} cheksk${nocolor}"
-   mysql -h 172.31.8.118 -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
+   mysql -h 172.31.8.118 -uroot -p${mysql_root_password} < ${app_path}/schema/${component}.sql  &>>${log_file}
+   stat_check $?
 }
 
 python(){
